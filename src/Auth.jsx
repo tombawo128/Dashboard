@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { Activity, CheckCircle2, Sparkles } from 'lucide-react';
-import { DEMO_ACCOUNT } from './data/demoDatabase.js';
 
 async function derive(password, saltHex) {
   const salt = saltHex ? Uint8Array.from(saltHex.match(/.{1,2}/g).map(v => parseInt(v, 16))) : crypto.getRandomValues(new Uint8Array(16));
@@ -15,14 +14,6 @@ function accounts() {
   try { return JSON.parse(localStorage.getItem('dashboard_accounts') || '[]'); }
   catch { return []; }
 }
-export async function seedDemoAccount() {
-  const list = accounts();
-  if (!list.some(a => a.email === DEMO_ACCOUNT.email)) {
-    const hash = await derive(DEMO_ACCOUNT.password);
-    list.push({ id: 'demo-workspace', name: 'Demo Workspace', email: DEMO_ACCOUNT.email, ...hash, createdAt: new Date().toISOString() });
-    localStorage.setItem('dashboard_accounts', JSON.stringify(list));
-  }
-}
 export default function Auth({ onLogin }) {
   const [mode, setMode] = useState('login');
   const [name, setName] = useState('');
@@ -35,7 +26,7 @@ export default function Auth({ onLogin }) {
     e.preventDefault(); setError(''); setBusy(true);
     try {
       const normalized = email.trim().toLowerCase();
-      const list = accounts();
+      const list = accounts().filter(a => a.email !== 'demo@dashboard.local');
       if (mode === 'register') {
         if (name.trim().length < 2) throw new Error('Enter your full name.');
         if (password.length < 8) throw new Error('Use a password with at least 8 characters.');
@@ -76,7 +67,6 @@ export default function Auth({ onLogin }) {
       {error && <div className="auth-error">{error}</div>}
       <button className="btn btn-primary auth-submit" disabled={busy}>{busy ? 'Please wait…' : mode === 'login' ? 'Sign in' : 'Create account'}</button>
       <div className="auth-switch">{mode === 'login' ? "Don't have an account?" : 'Already have an account?'}<button type="button" onClick={() => { setMode(mode === 'login' ? 'register' : 'login'); setError(''); }}>{mode === 'login' ? 'Create account' : 'Sign in'}</button></div>
-      <div className="auth-demo"><b>Demo access</b><span>Email: {DEMO_ACCOUNT.email}</span><span>Password: {DEMO_ACCOUNT.password}</span><small>Sample account for exploring the demo workspace.</small></div>
-    </form><span className="auth-legal">Your demo data is stored in this browser only.</span></main>
+    </form><span className="auth-legal">Your workspace data is stored in this browser only.</span></main>
   </div>;
 }
