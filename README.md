@@ -4,7 +4,7 @@ A responsive, frontend-only business management workspace built with React and V
 
 ## Features
 - Account registration and login screens
-- Demo account and sample business records seeded locally; new accounts start with an empty workspace
+- New accounts start with an empty workspace
 - Password verification using browser PBKDF2 hashing
 - Per-account browser storage for workspace preferences and records
 - Business overview with revenue, customer, outstanding-payment and task KPIs
@@ -18,10 +18,10 @@ A responsive, frontend-only business management workspace built with React and V
 - Responsive desktop and mobile layouts
 
 ## Demo access
-- Email: `demo@dashboard.local`
-- Password: `Dashboard123!`
+- Email: `registered account`
+- Password: `registered account`
 
-The demo account is created in the browser on first load and starts with sample records. Newly registered accounts start with empty customer, sales and task lists, while keeping the same dashboard features.
+Newly registered accounts start with empty customer, sales and task lists, while keeping the same dashboard features.
 
 ## Run locally
 ```bash
