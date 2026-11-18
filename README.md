@@ -1,16 +1,26 @@
 # Dashboard
 
-A frontend-only business management workspace built with React and Vite.
+A responsive, frontend-only business management workspace built with React and Vite. No Supabase or backend service is used.
 
 ## Features
-- Business overview with revenue, customers, outstanding payments and task KPIs
-- Revenue trend chart with selectable periods
-- Customer directory with create, search, archive and restore
-- Sales ledger with paid/pending status and CSV export
-- Task manager with priorities, due dates and completion tracking
+- Account registration and login screens
+- Demo account and sample business records seeded locally
+- Password verification using browser PBKDF2 hashing
+- Per-account browser storage for workspace preferences and records
+- Business overview with revenue, customer, outstanding-payment and task KPIs
+- Revenue trend chart
+- Customer directory: create, search, edit, archive, restore and delete
+- Sales ledger: create, edit, update payment status, delete and export CSV
+- Task manager: create, edit, complete, delete and track due dates and priorities
 - Reports with revenue and collection summaries
-- Workspace settings, business name and currency selection (RWF, USD, NGN, KES, GBP)
-- Browser localStorage persistence and responsive layout
+- Workspace settings and currency display options (RWF, USD, NGN, KES, GBP)
+- Responsive desktop and mobile layouts
+
+## Demo access
+- Email: `demo@dashboard.local`
+- Password: `Dashboard123!`
+
+The demo account is created in the browser on first load and starts with sample records.
 
 ## Run locally
 ```bash
@@ -18,10 +28,12 @@ npm install
 npm run dev
 ```
 
-## Build
+## Production build
 ```bash
 npm run build
 ```
 
-## Data and security
-This is a frontend-only application. Records are stored in the current browser using localStorage. They are not synchronized between users or devices. Clearing browser data removes locally stored records. Do not use this demo for confidential or business-critical records without adding a secure backend, authentication, backups and access controls.
+## Data and security limitations
+This project deliberately has no backend, Supabase, server-side authentication or cloud database. Accounts, password hashes, sessions and business records are stored in the browser's localStorage. PBKDF2 hashing prevents passwords from being stored as plain text, but client-side authentication is not a security boundary: users can inspect or modify browser data. Accounts and records do not sync between browsers, devices or users. Clearing browser storage removes the local data.
+
+This implementation is appropriate for a prototype/demo. Do not use it for confidential or business-critical information. Production use requires a trusted backend for authentication, authorization, shared persistence, backups and server-side validation.
