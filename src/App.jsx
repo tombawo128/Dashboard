@@ -33,12 +33,10 @@ function initializeStarterData(){
   const marker=storageKey('starter_data_initialized');
   if(localStorage.getItem(marker)==='1')return;
   const existingCustomers=read('customers',[]),existingSales=read('sales',[]),existingTasks=read('tasks',[]);
-  if(!existingCustomers.length&&!existingSales.length&&!existingTasks.length){
-    const sample=createStarterData();
-    localStorage.setItem(storageKey('customers'),JSON.stringify(sample.customers));
-    localStorage.setItem(storageKey('sales'),JSON.stringify(sample.sales));
-    localStorage.setItem(storageKey('tasks'),JSON.stringify(sample.tasks));
-  }
+  const sample=createStarterData();
+  if(!existingCustomers.length)localStorage.setItem(storageKey('customers'),JSON.stringify(sample.customers));
+  if(!existingSales.length)localStorage.setItem(storageKey('sales'),JSON.stringify(sample.sales));
+  if(!existingTasks.length)localStorage.setItem(storageKey('tasks'),JSON.stringify(sample.tasks));
   localStorage.setItem(marker,'1');
 }
 function Modal({title,onClose,children}) { return <div className="modal-backdrop" onMouseDown={e=>e.target===e.currentTarget&&onClose()}><section className="modal"><div className="modal-head"><h3>{title}</h3><button className="icon-btn" onClick={onClose}><X size={18}/></button></div>{children}</section></div>; }
