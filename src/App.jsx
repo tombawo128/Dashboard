@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import Auth, { seedDemoAccount } from './Auth.jsx';
+import Auth from './Auth.jsx';
 import { DEMO_DATABASE } from './data/demoDatabase.js';
 import {
   Activity, ArrowUpRight, Bell, BriefcaseBusiness, CalendarDays, Check,
@@ -81,7 +81,7 @@ function SalesTable({sales,currency,onStatus,onEdit,onDelete}){return <div class
 
 export default function App(){
  const [session,setSession]=useState(()=>currentSession());
- useEffect(()=>{seedDemoAccount();},[]);
+ useEffect(()=>{const accounts=JSON.parse(localStorage.getItem('dashboard_accounts')||'[]').filter(a=>a.email!=='demo@dashboard.local');localStorage.setItem('dashboard_accounts',JSON.stringify(accounts));const session=JSON.parse(localStorage.getItem('dashboard_session')||'null');if(session?.id==='demo-workspace')localStorage.removeItem('dashboard_session');['customers','sales','tasks','business','currency'].forEach(k=>localStorage.removeItem('dashboard_demo-workspace_'+k));},[]);
  function login(user){localStorage.setItem('dashboard_session',JSON.stringify(user));setSession(user);}
  function logout(){localStorage.removeItem('dashboard_session');setSession(null);}
  return session?<WorkspaceApp key={session.id} session={session} onLogout={logout}/>:<Auth onLogin={login}/>;
