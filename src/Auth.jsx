@@ -33,9 +33,9 @@ export default function Auth({ onLogin }) {
         if (password !== confirm) throw new Error('Your passwords do not match.');
         if (list.some(a => a.email === normalized)) throw new Error('An account with this email already exists.');
         const result = await derive(password);
-        const account = { id: crypto.randomUUID(), name: name.trim(), email: normalized, ...result, createdAt: new Date().toISOString() };
+        const account = { id: crypto.randomUUID(), name: name.trim(), email: normalized, role: normalized === 'admin@dashboard.local' ? 'admin' : 'user', ...result, createdAt: new Date().toISOString() };
         localStorage.setItem('dashboard_accounts', JSON.stringify([account, ...list]));
-        onLogin({ id: account.id, name: account.name, email: account.email });
+        onLogin({ id: account.id, name: account.name, email: account.email, role: account.role || 'user' });
       } else {
         const account = list.find(a => a.email === normalized);
         if (!account) throw new Error('No account found. Create an account first.');
