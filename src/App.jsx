@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
-import Auth from './Auth.jsx';\nimport AdminPanel from './Admin.jsx';
+import Auth from './Auth.jsx';
+import AdminPanel from './Admin.jsx';
 import {
   Activity, ArrowUpRight, Bell, BriefcaseBusiness, CalendarDays, Check,
   CheckCircle2, ChevronDown, ChevronRight, CircleHelp, ClipboardList, Download,
