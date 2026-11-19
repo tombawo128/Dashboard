@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import Auth from './Auth.jsx';
+import Auth from './Auth.jsx';\nimport AdminPanel from './Admin.jsx';
 import {
   Activity, ArrowUpRight, Bell, BriefcaseBusiness, CalendarDays, Check,
   CheckCircle2, ChevronDown, ChevronRight, CircleHelp, ClipboardList, Download,
@@ -103,5 +103,5 @@ export default function App(){
  useEffect(()=>{const accounts=JSON.parse(localStorage.getItem('dashboard_accounts')||'[]').filter(a=>a.email!=='demo@dashboard.local');localStorage.setItem('dashboard_accounts',JSON.stringify(accounts));const session=JSON.parse(localStorage.getItem('dashboard_session')||'null');if(session?.id==='demo-workspace')localStorage.removeItem('dashboard_session');['customers','sales','tasks','business','currency'].forEach(k=>localStorage.removeItem('dashboard_demo-workspace_'+k));},[]);
  function login(user){localStorage.setItem('dashboard_session',JSON.stringify(user));setSession(user);}
  function logout(){localStorage.removeItem('dashboard_session');setSession(null);}
- return session?<WorkspaceApp key={session.id} session={session} onLogout={logout}/>:<Auth onLogin={login}/>;
+ return session?.role==='admin'?<AdminPanel session={session} onLogout={logout}/>:session?<WorkspaceApp key={session.id} session={session} onLogout={logout}/>:<Auth onLogin={login}/>;
 }
