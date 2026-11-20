@@ -41,7 +41,7 @@ export default function Auth({ onLogin }) {
         if (!account) throw new Error('No account found. Create an account first.');
         const result = await derive(password, account.salt);
         if (result.hash !== account.hash) throw new Error('Incorrect email or password.');
-        onLogin({ id: account.id, name: account.name, email: account.email });
+        onLogin({ id: account.id, name: account.name, email: account.email, role: account.role || 'user' });
       }
     } catch (err) { setError(err.message || 'Unable to continue. Please try again.'); }
     finally { setBusy(false); }
